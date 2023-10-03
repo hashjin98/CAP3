@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+		rel="stylesheet">
+	<title>Hexashop - 회원가입 페이지</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+	<!-- FontAwesome CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+	<!-- Templatemo Hexashop CSS -->
+	<link rel="stylesheet" href="assets/css/templatemo-hexashop.css">
+</head>
+<body>
+    <form id="signupForm">
+        <div class="form-group">
+            <label for="username">사용자 이름</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">이메일 주소</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">비밀번호 확인</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+        </div>
+        <div class="form-group">
+            <label for="age">나이</label>
+            <input type="number" class="form-control" id="age" name="age" required>
+        </div>
+        <div class="form-group">
+            <label for="gender">성별</label>
+            <select class="form-control" id="gender" name="gender" required>
+                <option value="male">남성</option>
+                <option value="female">여성</option>
+                <option value="other">기타</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">가입하기</button>
+    </form>
+
+    <script>
+        // AJAX를 사용하여 회원 가입 요청 보내기
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            // 비밀번호와 비밀번호 확인이 일치하는지 확인
+            var password = formData.get("password");
+            var confirm_password = formData.get("confirm_password");
+            if (password !== confirm_password) {
+                alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                return;
+            }
+
+            fetch("/signup", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // 회원 가입 결과 메시지를 표시
+            });
+        });
+    </script>
+</body>
+</html>
